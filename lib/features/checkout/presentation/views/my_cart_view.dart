@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_stripe_payment/core/utils/app_style.dart';
+import 'package:flutter_paypal_stripe_payment/features/checkout/presentation/views/widgets/my_cart_view_body.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class MyCartView extends StatelessWidget {
   const MyCartView({super.key});
@@ -19,6 +20,7 @@ class MyCartView extends StatelessWidget {
         ),
 
       ),
+      body: MyCartViewBody(),
 
     );
   }
