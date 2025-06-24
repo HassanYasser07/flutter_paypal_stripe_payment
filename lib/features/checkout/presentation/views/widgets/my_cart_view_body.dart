@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_stripe_payment/features/checkout/presentation/views/widgets/total_value.dart';
 
+import '../payment_details.dart';
 import 'custom_button.dart';
 import 'order_info_item.dart';
 class MyCartViewBody extends StatelessWidget {
@@ -23,7 +24,11 @@ class MyCartViewBody extends StatelessWidget {
           ),
           TotalValue(title: 'Total', value: '42.97',),
       SizedBox(height: 30,),
-      CustomButton(onTap: () {  },)
+      CustomButton(
+        text: 'Complete Payment',
+        onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PaymentDetailsView(),));
+      },)
 
 
 

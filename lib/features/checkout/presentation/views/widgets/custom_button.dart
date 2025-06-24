@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_style.dart';
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.onTap});
+  const CustomButton({super.key, required this.onTap, required this.text});
   final void Function() onTap;
+  final String text;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
             child: Text(
               textAlign: TextAlign.center,
               style: Styles.style22,
-              'Complete Payment',
+              text,
             ),)
       ),
     );
