@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal_stripe_payment/features/checkout/presentation/views/success_view.dart';
 import 'package:flutter_paypal_stripe_payment/features/checkout/presentation/views/widgets/custom_button.dart';
 import 'package:flutter_paypal_stripe_payment/features/checkout/presentation/views/widgets/payment_method_list_view.dart';
 
@@ -30,7 +31,11 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
               text: 'Pay',onTap: (){
                 if(formKey.currentState!.validate()){
                   formKey.currentState!.save();}
-                else{autoValidateMode = AutovalidateMode.always;
+                else{
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SuccessView(),));
+
+                  autoValidateMode = AutovalidateMode.always;
                 setState(() {});}
           }),
         ))),
