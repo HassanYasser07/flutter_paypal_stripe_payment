@@ -24,7 +24,18 @@ class StripeServices {
       merchantDisplayName: "Flutter Stripe Payment"
     ));
   }
-  Future presentPaymentSheet() async {
+  Future displayPaymentSheet() async {
     await Stripe.instance.presentPaymentSheet();
   }
+
+
+  Future makePayment({required PaymentIntentInputModel paymentIntentInputModel}) async {
+  var paymentIntentModel = await createPaymentIntent(paymentIntentInputModel);
+  Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
+    paymentIntentClientSecret: paymentIntentModel.clientSecret,
+  ));
+  await displayPaymentSheet();
+  }
+
 }
+
