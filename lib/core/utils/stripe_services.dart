@@ -24,4 +24,7 @@ class StripeServices {
       merchantDisplayName: "Flutter Stripe Payment"
     ));
   }
+  Future presentPaymentSheet() async {
+    await Stripe.instance.presentPaymentSheet();
+  }
 }
