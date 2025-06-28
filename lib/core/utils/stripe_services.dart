@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_paypal_stripe_payment/core/utils/api_key.dart';
 import 'package:flutter_paypal_stripe_payment/core/utils/api_services.dart';
 import 'package:flutter_paypal_stripe_payment/features/checkout/data/models/payment_intent_input_model.dart';
@@ -11,6 +12,7 @@ class StripeServices {
     PaymentIntentInputModel paymentIntentInputModel,
   ) async {
     var response = await apiServices.post(
+      contentType: Headers.formUrlEncodedContentType,
       url: 'https://api.stripe.com/v1/payment_intents',
       body: paymentIntentInputModel.toJson(),
       token: ApiKey.secretKey,
@@ -18,24 +20,29 @@ class StripeServices {
     var paymentIntentModel = PaymentIntentModel.fromJson(response.data);
     return paymentIntentModel;
   }
+
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
-    Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
-      paymentIntentClientSecret: paymentIntentClientSecret,
-      merchantDisplayName: "Flutter Stripe Payment"
-    ));
+   await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntentClientSecret,
+        merchantDisplayName: "Flutter Stripe Payment",
+      ),
+    );
   }
+
   Future displayPaymentSheet() async {
     await Stripe.instance.presentPaymentSheet();
   }
 
+  Future makePayment({
+    required PaymentIntentInputModel paymentIntentInputModel,
+  }) async {
+    var paymentIntentModel = await createPaymentIntent(paymentIntentInputModel);
 
-  Future makePayment({required PaymentIntentInputModel paymentIntentInputModel}) async {
-  var paymentIntentModel = await createPaymentIntent(paymentIntentInputModel);
-  Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
-    paymentIntentClientSecret: paymentIntentModel.clientSecret,
-  ));
-  await displayPaymentSheet();
+    await initPaymentSheet(
+      paymentIntentClientSecret: paymentIntentModel.clientSecret,
+    );
+
+    await displayPaymentSheet();
   }
-
 }
-
