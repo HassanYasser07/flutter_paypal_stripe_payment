@@ -31,7 +31,7 @@ class CustomButtonBlocConsumer extends StatelessWidget {
           isLoading: state is PaymentLoading ? true : false,
           text: 'Continue',
           onTap: () {
-            PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: '100', currency: 'USD');
+            PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: '100', currency: 'USD', customerId: 'cus_SabgRrbOos64wC');
             BlocProvider.of<PaymentCubit>(context).makePayment(paymentIntentInputModel: paymentIntentInputModel);
             Navigator.of(context).push(
               MaterialPageRoute(
